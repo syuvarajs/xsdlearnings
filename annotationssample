@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    		jaxb:version="2.1"
+    		xmlns:annox="http://annox.dev.java.net">
+
+	<xs:element name="sellerKPIWeightage" type="sellerKPIWeightage" />
+	<xs:element name="sellerKPIPerformanceMaster" type="sellerKPIPerformanceMaster"/> 
+	<xs:element name="sellerKPIFeedbackMaster" type="sellerKPIFeedbackMaster"/>
+	<xs:element name="sellerKPIResponse" type="sellerKPIResponse"/> 
+	<xs:complexType name="sellerKPIResponse"> 
+		<xs:sequence>
+			<xs:element name="isSuccess" type="xs:boolean" />
+			<xs:element name="message" type="xs:string"/>			
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sellerKPIWeightage"> 
+		<xs:sequence>
+			<xs:element name="sellerKPIId" type="xs:long">
+				<xs:annotation>
+                    <xs:appinfo>
+                        <annox:annotate target="field">@org.springframework.data.annotation.Id</annox:annotate>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>    
+			<xs:element name="sellerKpiName" type="kpiNameEnum"/>
+			<xs:element name="sellerKpiHeader" type="kpiHeaderEnum"/>
+			<xs:element name="fullfillmentType" type="fullfillmentTypeEnum" />
+			<xs:element name="financialModel" type="financialModelEnum" />			
+			<xs:element name="applicableUnit" type="applicableUnitEnum"/>			
+			<xs:element name="actionedBy" type="accessdByEnum"/>
+			<xs:element name="creditType" type="creditTypeEnum"/>
+			<xs:element name="weightage" type="xs:double" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sellerKPIPerformanceMaster">
+		<xs:sequence>
+			<xs:element name="performanceMasterId" type="xs:long">
+				<xs:annotation>
+	                    <xs:appinfo>
+	                        <annox:annotate target="field">@org.springframework.data.annotation.Id</annox:annotate>
+	                    </xs:appinfo>
+	            </xs:annotation>
+	        </xs:element>
+			<xs:element name="sellerId" type="xs:string" />
+			<xs:element name="sellerKpiName" type="kpiNameEnum" />
+			<xs:element name="sellerKpiHeader" type="kpiHeaderEnum"/>
+			<xs:element name="jiooCode" type="xs:string"/>
+			<xs:element name="shipmentId" type="xs:string"/>
+			<xs:element name="orderId" type="xs:string"/>
+			<xs:element name="noOfItems" type="xs:long"/>
+			<xs:element name="fullfillmentType" type="fullfillmentTypeEnum" />
+			<xs:element name="financialModel" type="financialModelEnum" />
+			<xs:element name="applicableUnit" type="applicableUnitEnum"/>
+			<xs:element name="actionedBy" type="accessdByEnum"/>
+			<xs:element name="actionedById" type="xs:string"/>
+			<xs:element name="transactionDate" type="xs:dateTime"/>
+			<xs:element name="pickupDate" type="xs:dateTime"/>
+			<xs:element name="deliveryDate" type="xs:dateTime"/>
+			<xs:element name="creditType" type="creditTypeEnum"/>
+			<xs:element name="weightage" type="xs:double" nillable="true"/>
+			<xs:element name="creationDate" type="xs:dateTime"/>
+			<xs:element name="lastModifiedDate" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sellerKPIFeedbackMaster">
+		<xs:sequence>
+			<xs:element name="feedbackMasterId" type="xs:long" >
+				<xs:annotation>
+	                    <xs:appinfo>
+	                        <annox:annotate target="field">@org.springframework.data.annotation.Id</annox:annotate>
+	                    </xs:appinfo>
+	            </xs:annotation>
+	        </xs:element>
+			<xs:element name="sellerId" type="xs:string" />
+			<xs:element name="sellerKpiName" type="kpiNameEnum" />
+			<xs:element name="sellerKpiHeader" type="kpiHeaderEnum"/>
+			<xs:element name="jiooCode" type="xs:string"/>
+			<xs:element name="orderId" type="xs:string"/>
+			<xs:element name="noOfItems" type="xs:long"/>
+			<xs:element name="applicableUnit" type="applicableUnitEnum"/>
+			<xs:element name="actionedBy" type="accessdByEnum"/>
+			<xs:element name="actionedById" type="xs:string"/>
+			<xs:element name="transactionDate" type="xs:dateTime"/>
+			<xs:element name="feedBackType" type="feedBackTypeEnum"/>
+			<xs:element name="feedBackRating" type="xs:double"/>
+			<xs:element name="creditType" type="creditTypeEnum"/>
+			<xs:element name="weightage" type="xs:double" nillable="true"/>
+			<xs:element name="creationDate" type="xs:dateTime"/>
+			<xs:element name="lastModifiedDate" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="fullfillmentTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PARTIAL_DROPSHIP" />
+			<xs:enumeration value="FULL_DROPSHIP" />
+			<xs:enumeration value="CONSIGNMENT" />
+			<xs:enumeration value="SOR" />
+			<xs:enumeration value="BACK_TO_BACK" />
+			<xs:enumeration value="JUST_IN_TIME" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name = "financialModelEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="COMMISSION" />
+			<xs:enumeration value="NON_COMMISSION" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name = "feedBackTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SELLER" />
+			<xs:enumeration value="SITE" />
+			<xs:enumeration value="PRODUCT" />
+			<xs:enumeration value="SHIPPING" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name = "kpiHeaderEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ORDER" />
+			<xs:enumeration value="ITEM" />
+			<xs:enumeration value="PRODUCT" />
+			<xs:enumeration value="POILICY" />
+			<xs:enumeration value="PICKUP" />
+			<xs:enumeration value="INVENTORY" />
+			<xs:enumeration value="DELIVERY" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name= "applicableUnitEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ORDER" />
+			<xs:enumeration value="EACH_ITEM" />
+			<xs:enumeration value="PER_SHIPMENT" />
+			<xs:enumeration value="EACH_WEEK" />
+			<xs:enumeration value="EACH_ACTIVE_LISTING" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="kpiNameEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CONFIRM_SELLER_ORDER" />
+			<xs:enumeration value="TOTAL_ORDER_VALUE" />
+			<xs:enumeration value="TOTAL_ORDERS_PROCESSED" />
+			<xs:enumeration value="CANCEL_SELLER_ORDER" />
+			<xs:enumeration value="SHORT_PICKED" />
+			<xs:enumeration value="FAILURE_TO_GIFT_WRAP" />
+			<xs:enumeration value="USER_RATING" />
+			<xs:enumeration value="GURANTEE_CLAIM" />
+			<xs:enumeration value="CHARGE_BACK_CLAIM" />
+			<xs:enumeration value="BUY_BOX" />
+			<xs:enumeration value="LEAST_PRICE_AMONG_SELLERS" />
+			<xs:enumeration value="TOTAL_ACTIVE_LISTINGS" />
+			<xs:enumeration value="FAILURE_TO_GIFT_WRAP" />
+			<xs:enumeration value="ITEMS_SOLD_CHEAP_IN_OTHER_MP" />
+			<xs:enumeration value="OTHER_POLICY_VOILATION" />
+			<xs:enumeration value="OTHER_POLICY_VOILATION" />
+			<xs:enumeration value="SHIPPING_FEEDBACK" />
+			<xs:enumeration value="PRODUCT_FEEDBACK" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name ="accessdByEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SELLER" />
+			<xs:enumeration value="OPERATOR" />
+			<xs:enumeration value="BUYER" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="creditTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="POSITIVE" />
+			<xs:enumeration value="NEGATIVE" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
