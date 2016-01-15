@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<project name="RILSellerKPIClient" default="jar">
+ 
+   <property name="lib.dir" location="lib" />
+   <property name="src.dir" location="src" />
+   <property environment="env" />
+   <property name="build_parameter"  value="${env.BUILD_NUMBER}"/>
+   
+   <path id="mylibs">
+       <fileset dir="${lib.dir}" includes="**/*.jar" />
+   </path>
+ 
+	<taskdef name="xjc" classname="com.sun.tools.xjc.XJC2Task">
+	  <classpath>
+	    <fileset dir="lib" includes="**/*.jar" />	  	
+	  </classpath>
+	</taskdef>
+
+	<target name="generate">
+	    <delete dir="gensrc" />
+	    <mkdir dir="gensrc" />	
+		<xjc destdir="${basedir}/gensrc" extension="true">
+			<arg line="
+				-Xannotate"/>
+			<binding dir="${basedir}/resources/schema">
+			 	<include name="**/*.xjb"/>
+			</binding>
+			<schema dir="${basedir}/resources/schema">
+			 	<include name="**/*.xsd"/>
+			</schema>					
+		</xjc>
+	</target>
+ 
+   <target name="clean">
+   	  <delete dir="gensrc" failonerror="false" />
+      <delete dir="build" />
+   </target>
+ 
+ 
+   <target name="compile">
+       <mkdir dir="build/classes" />
+       <javac srcdir="src" destdir="build/classes" classpathref="mylibs"
+           debug="on" includeantruntime="false" />
+       	<javac srcdir="gensrc" destdir="build/classes" classpathref="mylibs"
+       	   debug="on" includeantruntime="false" />
+   </target>
+ 
+   <target name="jar" depends="clean,generate,compile">
+       <mkdir dir="build/jar" />
+       <jar destfile="build/jar/Sample.jar" basedir="build/classes" />
+   </target>
+ 
+ 
+</project>
